@@ -23,5 +23,6 @@ inner join country on city.country_id = country.country_id
 
 -- The crow's foot notation in the dvdrental shows the connections between two or more different tables. For example,
 -- rental and customer tables are connected by the customer_ids in both tables. From rental to customer, there is a
--- "|o". This means there is one and an optional relationship. From customer to rental, there is a "||".  This means
--- there is one thing that customer is related to rental. The customer can only be attached to one rental thing.
+-- "|o". This means there is one and an optional relationship. One of the rentals could have one or no relationships 
+-- between the customer. From customer to rental, there is a "||".  This means there is one thing that customer is 
+-- related to rental. The customer can only be attached to one rental thing.
