@@ -28,3 +28,10 @@ inner join actor on film_actor.actor_id = actor.actor_id
 where release_year = '2006'
 group by first_name, last_name
 order by COUNT(title) DESC;
+
+select *
+from category
+inner join film_category on category.category_id = film_category.category_id
+inner join film on film_category.film_id = film.film_id
+inner join inventory on film.film_id = inventory.film_id
+inner join rental on inventory.inventory_id = rental.inventory_id
