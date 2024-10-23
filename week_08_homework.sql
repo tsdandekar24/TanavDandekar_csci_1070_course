@@ -1,6 +1,14 @@
 
 -- 1.
-
+UPDATE rental
+SET status = 
+    CASE
+        WHEN return_date > rental_date + INTERVAL '1 day' * rental_duration THEN 'late'
+        WHEN return_date < rental_date + INTERVAL '1 day' * rental_duration THEN 'early'
+        ELSE 'on time'
+    END
+FROM inventory, film
+WHERE rental.inventory_id = inventory.inventory_id AND inventory.film_id = film.film_id;
 -- 2.
 SELECT city, SUM(amount) AS "Total Payment"
 FROM city
@@ -36,14 +44,32 @@ INNER JOIN payment on rental.rental_id = payment.rental_id
 WHERE amount < (SELECT AVG(amount) FROM payment);
 
 -- 7.
-INSERT INTO rental (status)
-VALUES (CASE
-			WHEN return_date > DATEADD(day, rental_duration, rental_date) THEN 'late'
-			WHEN return_date < DATEADD(day, rental_duration, rental_date) THEN 'early'
-			ELSE 'on time'
-		END)
-SELECT status
+
+SELECT status, COUNT(status)
 FROM rental
+GROUP BY status;
+
+-- 8.
+
+SELECT film_id, length, PERCENT_RANK() OVER(ORDER BY length) AS "Percent Rank"
+FROM film;
+
+-- 9.
+
+EXPLAIN ANALYZE SELECT status, COUNT(status)
+FROM rental
+GROUP BY status;
+-- In the HashAggregate row, it talks about the estimate rows being looked at being 736 rows, and how many rows it produces. 
+-- It also mentions the amount of time it takes to run this. Because the rows are being grouped by, it uses status as its group key. 
+-- It talks about the amount of memory it uses. After that, it does a sequential scan looking at all the rows to count
+-- the different statuses.
+
+EXPLAIN ANALYZE SELECT film_id, amount
+FROM inventory
 INNER JOIN rental on inventory.inventory_id = rental.inventory_id
-INNER JOIN inventory on film.film_id = inventory.film_id
-		
+INNER JOIN payment on rental.rental_id = payment.rental_id
+WHERE amount < (SELECT AVG(amount) FROM payment)
+--
+
+	
+
