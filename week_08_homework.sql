@@ -1,4 +1,7 @@
 -- 1.
+--ALTER TABLE rental
+--ADD status varchar(255);
+
 UPDATE rental
 SET status = 
     CASE
@@ -64,7 +67,7 @@ EXPLAIN ANALYZE SELECT film_id, amount
 FROM inventory
 INNER JOIN rental on inventory.inventory_id = rental.inventory_id
 INNER JOIN payment on rental.rental_id = payment.rental_id
-WHERE amount < (SELECT AVG(amount) FROM payment)
+WHERE amount < (SELECT AVG(amount) FROM payment);
 -- It first talks about doing a has join  and how many rows it has to consider for it. It shows the amount of time
 -- it takes to perform the hash join. The conditional of the hash join is when rental.inventory_id = inventory.inventory_id.
 -- It talks about its lists of plans for calculating the payment. It recognizes the aggregate function AVG() for amount.
