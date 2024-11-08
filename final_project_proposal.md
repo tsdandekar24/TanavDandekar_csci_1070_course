@@ -2,4 +2,4 @@
 2. We are using the Bank Marketing Dataset. https://archive.ics.uci.edu/dataset/222/bank+marketing
 3. Null: For the Bank Marketing dataset, which talks about how likely a customer subscribe the bank and create an account, there will be no difference between the customer's previous history and if they make a term deposit to the bank.
 Alternative: For the Bank Marketing dataset, there will be a difference between customer's previous hisory and if they make a term deposit to the bank.
-4. A model we were thinking of using is logistic regression because it is binary decision if they will get put a term deposit into the bank. Another model is linear regression because it can show the relationship between the customer's previous history and if they subscribe to the bank.
+4. A model we were thinking of using is logistic regression because it is binary decision if they will get put a term deposit into the bank. Another model is KNN because it can show the relationship between the customer's previous history and predict if other surrounding neighbors will subscribe to the bank.
